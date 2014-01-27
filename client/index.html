@@ -8,12 +8,49 @@
     <!-- external javascript -->
     <script src="bower_components/jquery/jquery.min.js"></script>
     <script src="bower_components/underscore/underscore-min.js"></script>
-    
+    <script src="bower_components/backbone/backbone-min.js"></script>    
     <!-- internal javascript -->
     <script src="scripts/config.js"></script>
-    <script src="scripts/app.js"></script>
+    <script src="scripts/chat.js"></script>
+    <script src="scripts/chatview.js"></script>
+    <script src="scripts/chatlist.js"></script>
+    <script src="scripts/chatlistview.js"></script>
+    <script src="scripts/newchatview.js"></script>
+    <script src="scripts/roomformview.js"></script>
+
+
   </head>
   <body>
+    <div class="friends">
+      <h3>Friends</h3>
+      <ul class="friendList">
+      </ul>
+    </div>
+    <div id="main">
+      <h1>Chat-Client</h1>
+      <div class = "roomContainer">
+        <div class="linkDiv">
+          <a href="#" class="toggleRoom">Enter a room</a>
+        </div>
+          <div class="enterRoom">
+            <datalist id="rooms">
+              <option value="Main">
+              <option value="Groovy">
+              <option value="Classroom">
+            </datalist>
+            <form id="roomForm">
+              <input name="rooms" list="rooms" />
+            </form>
+          </div>
+      </div>
+      <div class="post">
+        <form id="chatForm">
+          <input class="newMessage" type="text" size="70" placeholder="Enter message here.."/>
+          <button type="submit" >Send</button>
+        </form>
+      </div>
+      <div class="chats"></div>
+    </div>
 
   </body>
 </html>

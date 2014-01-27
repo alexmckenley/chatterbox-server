@@ -5,13 +5,13 @@ body {
 }
 
 #main {
-  width: 500px;
-  margin: auto;
-  text-align: left;
-  background: white;
-  padding: 50px 60px;
-  border: solid #ddd;
-  border-width: 0 1px 1px 1px;
+    width: 50%;
+    margin: auto;
+    text-align: left;
+    background: white;
+    padding: 50px 60px;
+    border: solid #ddd;
+    border-width: 0 1px 1px 1px;
 }
 
 #main h1 {
@@ -19,15 +19,53 @@ body {
   font-size: 35px;
 }
 
-.chat {
-  border: 1px solid black;
-  padding: 10px;
+.chat{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  overflow-x: scroll;
+  font-weight: normal;
+}
+
+.chat span, .chat a{
+  margin-right: 10px;
+}
+
+.linkDiv, .enterRoom {
+  text-align: right;
+  position: relative;
+  top: -50px;
+}
+
+.enterRoom {
+  display: none;
 }
 
 .username {
+  color: red;
+}
+
+.friend {
   font-weight: bold;
 }
 
-.post {
-  display: none;
+.friends{
+  position: relative;
+  float: right;
+  top: 100px;
+  width: 200px;
+  padding-right: 20px;
+  text-align: right;
+  background-color: rgb(199, 222, 230);
+  border-radius: 10px;
+}
+
+.createdAt, .roomname {
+  font-style: italic;
+  opacity: 0.55;
+  font-size: .8em
+}
+
+li {
+  margin-left: -25px;
+  list-style-type: none;
 }
