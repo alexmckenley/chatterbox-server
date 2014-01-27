@@ -4,6 +4,20 @@
  * You'll have to figure out a way to export this function from
  * this file and include it in basic-server.js so that it actually works.
  * *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html. */
+function parseQuery(qstr)
+{
+  var query = {};
+  var a = qstr.split('&');
+  for (var i in a)
+  {
+    var b = a[i].split('=');
+    query[decodeURIComponent(b[0])] = decodeURIComponent(b[1]);
+  }
+
+  return query;
+}
+
+var storage = [];
 
 var handleRequest = function(request, response) {
   /* the 'request' argument comes from nodes http module. It includes info about the
@@ -23,10 +37,17 @@ var handleRequest = function(request, response) {
     }
 
     if(request.method === "POST"){
-      body = "POST";
-      console.log("POST Succeeded");
+      var temp = "";
+      request.on('data', function (data) {
+        temp += data;
+      });
+      request.on('end', function(){
+        body = parseQuery(temp);        
+        storage.push(body);
+        console.log("End Event: ", body);
+      });
+      console.log(request);
     }
-
   }
 
 
