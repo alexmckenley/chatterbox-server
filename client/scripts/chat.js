@@ -1,5 +1,5 @@
 var Chat = Backbone.Model.extend({
-  url: "https://api.parse.com/1/classes/chatterbox",
+  url: 'http://localhost:8080/classes/messages',
   defaults: {
     roomname: "main"
   },

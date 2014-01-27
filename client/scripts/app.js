@@ -1,5 +1,5 @@
 var latest = 0;
-var url = 'https://api.parse.com/1/classes/chatterbox';
+var url = 'http://localhost:8080/classes/messages';
 var roomFilter = false;
 var room;
 var roomList = [];
