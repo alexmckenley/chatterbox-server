@@ -34,13 +34,11 @@ var handleRequest = function(request, response) {
   var statusCode = 200;
   var body = "";
 
-  if (request.method === "OPTIONS") {
-    response.writeHead(statusCode, headers);
-    response.end(body);
-  }
-
-
   if(request.url === "/classes/messages"){
+    if (request.method === "OPTIONS") {
+      response.writeHead(statusCode, headers);
+      response.end(body);
+    }
     if(request.method === "GET"){
       body = JSON.stringify(storage);
     
@@ -66,7 +64,13 @@ var handleRequest = function(request, response) {
       });
     
     }
+  } else {
+    statusCode = 404;
+    response.writeHead(statusCode, headers);
+    response.end(body);
   }
+
+
 
 
 };
