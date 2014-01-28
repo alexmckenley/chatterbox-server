@@ -1,7 +1,7 @@
 var ChatListView = Backbone.View.extend({
   initialize: function() {
     this.collection.on("reset", this.render, this);
-    this.collection.on("add", this.addOne, this);
+    this.collection.on("add", this.render, this);
 
     var that = this;
     setInterval(function() {
@@ -11,19 +11,22 @@ var ChatListView = Backbone.View.extend({
   events: {
   },
   render: function () {
-    this.collection.forEach(this.addOne, this);
-  },
-  addOne: function (chat, collection) {
-    console.log("Added to collection");
-    var chatView = new ChatView({model: chat});
-    if (this.collection.room === undefined || chat.get("roomname") === this.collection.room) {
-      this.$el.append(chatView.render());
-    }
+    var chats = this.collection.map(function (chat) {
+      var chatView = new ChatView({model: chat});
+        if (this.collection.room === undefined || chat.get("roomname") === this.collection.room) {
+          return chatView.render();
+        }
+    }, this);
+
+    this.$el.html("");
+    this.$el.append(chats);
   }
+  // addOne: function (chat, collection) {
+  //   console.log("Added to collection");
+  // }
 });
 
 $(document).ready(function() {
-
   chatList = new ChatList();
   var chatListView = new ChatListView({el: $(".chats"), collection: chatList});
   chatList.fetch({reset: true});

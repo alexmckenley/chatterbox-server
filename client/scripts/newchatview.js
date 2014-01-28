@@ -17,7 +17,6 @@ var NewChatView = Backbone.View.extend({
       "roomname": that.collection.room
     }, {success: function(resp) {
       that.clearInput();
-      console.log(resp);
       that.collection.add(chat);
     }});
   },

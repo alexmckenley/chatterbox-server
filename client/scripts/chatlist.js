@@ -6,6 +6,11 @@ var ChatList = Backbone.Collection.extend({
     this.room;
     this.friends = [];
   },
+  comparator: function (a, b){
+    var a = new Date(a.get('createdAt'));
+    var b = new Date(b.get('createdAt'));
+    return b - a;
+  },
   deleteModel: function(model) {
     model.trigger("removeView");
   }
