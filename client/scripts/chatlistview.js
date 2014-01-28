@@ -6,7 +6,7 @@ var ChatListView = Backbone.View.extend({
     var that = this;
     setInterval(function() {
       that.collection.fetch();
-    }, 1000);
+    }, 3000);
   },
   events: {
   },
@@ -14,6 +14,7 @@ var ChatListView = Backbone.View.extend({
     this.collection.forEach(this.addOne, this);
   },
   addOne: function (chat, collection) {
+    console.log("Added to collection");
     var chatView = new ChatView({model: chat});
     if (this.collection.room === undefined || chat.get("roomname") === this.collection.room) {
       this.$el.append(chatView.render());

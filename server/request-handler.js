@@ -27,34 +27,48 @@ var handleRequest = function(request, response) {
    * http://nodemanual.org/0.8.14/nodejs_ref_guide/http.html */
 
   console.log("Serving request type " + request.method + " for url " + request.url);
+  var headers = defaultCorsHeaders;
+  headers['Content-Type'] = "application/json";
+
+
   var statusCode = 200;
-  var body = "nothing";
+  var body = "";
+
+  if (request.method === "OPTIONS") {
+    response.writeHead(statusCode, headers);
+    response.end(body);
+  }
+
 
   if(request.url === "/classes/messages"){
     if(request.method === "GET"){
-      body = JSON.stringify([]);
-      console.log("GET here");
+      body = JSON.stringify(storage);
+    
+      response.writeHead(statusCode, headers);
+      response.end(body);
     }
 
     if(request.method === "POST"){
+      statusCode = 201;
       var temp = "";
+
       request.on('data', function (data) {
         temp += data;
       });
+
       request.on('end', function(){
-        body = parseQuery(temp);        
+        body = JSON.parse(temp);
+        body.createdAt = (new Date()).toISOString();
         storage.push(body);
-        console.log("End Event: ", body);
+        //console.log("End Event: ", body);
+        response.writeHead(statusCode, headers);
+        response.end(JSON.stringify(body));
       });
-      console.log(request);
+    
     }
   }
 
 
-  var headers = defaultCorsHeaders;
-  headers['Content-Type'] = "text/plain";
-  response.writeHead(statusCode, headers);
-  response.end(body);
 };
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).
