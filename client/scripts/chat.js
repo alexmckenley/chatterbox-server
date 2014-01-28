@@ -13,7 +13,8 @@ var Chat = Backbone.Model.extend({
     if (response.roomname === undefined) {
       response.roomname = null;
     }
-    if (_.contains(this.collection.friends, response.username)) {
+
+    if (this.collection && _.contains(this.collection.friends, response.username)) {
       response.isFriend = true;
     } else {
       response.isFriend = false;

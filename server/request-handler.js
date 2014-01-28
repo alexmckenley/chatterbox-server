@@ -38,7 +38,11 @@ var handleRequest = function(request, response) {
   var body = "";
   var path = url.parse(request.url).pathname;
 
-  if(request.url === "/classes/messages"){
+  if(path === "/") {
+    path = "/index.html";
+  }
+
+  if(path === "/classes/messages"){
     if (request.method === "OPTIONS") {
       response.writeHead(statusCode, headers);
       response.end(body);
