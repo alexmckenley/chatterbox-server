@@ -1,3 +1,6 @@
+var fs = require('fs');
+var url = require('url');
+
 /* You should implement your request handler function in this file.
  * And hey! This is already getting passed to http.createServer()
  * in basic-server.js. But it won't work as is.
@@ -33,6 +36,7 @@ var handleRequest = function(request, response) {
 
   var statusCode = 200;
   var body = "";
+  var path = url.parse(request.url).pathname;
 
   if(request.url === "/classes/messages"){
     if (request.method === "OPTIONS") {
@@ -65,9 +69,16 @@ var handleRequest = function(request, response) {
     
     }
   } else {
-    statusCode = 404;
-    response.writeHead(statusCode, headers);
-    response.end(body);
+    fs.readFile(__dirname + "/../client" + path, function (err,data) {
+      console.log(path);
+      if (err) {
+        response.writeHead(404);
+        response.end(JSON.stringify(err));
+        return;
+      }
+      response.writeHead(200);
+      response.end(data);
+    });
   }
 
 
