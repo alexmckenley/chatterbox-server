@@ -20,7 +20,12 @@ function parseQuery(qstr)
   return query;
 }
 
-var storage = [];
+var storage = fs.readFileSync("./log/messages.json", 'utf8');
+if(storage) {
+  storage = JSON.parse(storage);
+} else {
+  storage = [];
+}
 
 var handleRequest = function(request, response) {
   /* the 'request' argument comes from nodes http module. It includes info about the
@@ -31,8 +36,6 @@ var handleRequest = function(request, response) {
 
   console.log("Serving request type " + request.method + " for url " + request.url);
   var headers = defaultCorsHeaders;
-  headers['Content-Type'] = "application/json";
-
 
   var statusCode = 200;
   var body = "";
@@ -43,6 +46,8 @@ var handleRequest = function(request, response) {
   }
 
   if(path === "/classes/messages"){
+    headers['Content-Type'] = "application/json";
+    
     if (request.method === "OPTIONS") {
       response.writeHead(statusCode, headers);
       response.end(body);
@@ -66,7 +71,14 @@ var handleRequest = function(request, response) {
         body = JSON.parse(temp);
         body.createdAt = (new Date()).toISOString();
         storage.push(body);
-        //console.log("End Event: ", body);
+        fs.writeFile("./log/messages.json", JSON.stringify(storage), function(err) {
+          if(err) {
+            console.log("Error ", err);
+          } else {
+            console.log("File was saved");
+          }
+        });
+
         response.writeHead(statusCode, headers);
         response.end(JSON.stringify(body));
       });
